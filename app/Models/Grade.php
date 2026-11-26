@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Grade extends Model
 {
+    // The only column a request may change.
+    protected $fillable = ['grade'];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
