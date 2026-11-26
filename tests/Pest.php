@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Section;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -44,7 +48,43 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function makeTeacher(string $email): Teacher
 {
-    // ..
+    $teacher = new Teacher;
+    $teacher->first_name = 'Ana';
+    $teacher->last_name = 'Cruz';
+    $teacher->email = $email;
+    $teacher->save();
+
+    return $teacher;
+}
+
+function makeSection(string $name, ?Teacher $adviser, int $students = 0): Section
+{
+    $section = new Section;
+    $section->name = $name;
+    $section->grade_level = 10;
+    $section->adviser_id = $adviser?->id;
+    $section->save();
+
+    for ($i = 0; $i < $students; $i++) {
+        $student = new Student;
+        $student->lrn = str_pad($section->id * 100 + $i, 12, '0', STR_PAD_LEFT);
+        $student->first_name = 'Juan';
+        $student->last_name = 'Santos';
+        $student->section_id = $section->id;
+        $student->save();
+    }
+
+    return $section;
+}
+
+function makeUser(string $role = 'teacher', ?Teacher $teacher = null): User
+{
+    $user = User::factory()->create();
+    $user->role = $role;
+    $user->teacher_id = $teacher?->id;
+    $user->save();
+
+    return $user;
 }
