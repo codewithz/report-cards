@@ -47,7 +47,7 @@ jobs:
           chmod 600 ~/.ssh/deploy
           ssh -i ~/.ssh/deploy -o StrictHostKeyChecking=accept-new admin@"$DEPLOY_HOST" '
             set -e
-            cd /var/www/report-cards
+            cd /var/www/report-cards-final
             echo "Before:"; git branch -vv; git log --oneline -1
             git remote set-url origin https://github.com/codewithz/report-cards.git
             git fetch origin main
