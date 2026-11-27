@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/school.css') }}">
 </head>
 <body class="bg-slate-100 text-slate-800">
-    <header class="bg-blue-800 px-6 py-3">
+    <header class="bg-green-800 px-6 py-3">
         <a href="{{ route('sections.index') }}" class="text-xl font-bold text-white no-underline">Report Cards</a>
     </header>
 
