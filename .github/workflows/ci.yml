@@ -49,12 +49,13 @@ jobs:
             set -e
             cd /var/www/report-cards
             echo "Before:"; git branch -vv; git log --oneline -1
+            git remote set-url origin https://github.com/codewithz/report-cards.git
             git fetch origin main
             git checkout -B main origin/main
             git reset --hard origin/main
             echo "Now running:"; git log --oneline -1
             echo "Deployed to: $(pwd)"
-            echo "Apache serves:"; grep -rn "DocumentRoot" /etc/apache2/sites-enabled/ || echo "(no DocumentRoot found)"
+            echo "Apache serves:"; grep -Rn "DocumentRoot" /etc/apache2/sites-enabled/ || echo "(no DocumentRoot found)"
             composer install --no-dev --optimize-autoloader --no-interaction
             php artisan migrate --force
             php artisan optimize:clear
