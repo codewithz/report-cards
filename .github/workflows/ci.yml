@@ -48,8 +48,13 @@ jobs:
           ssh -i ~/.ssh/deploy -o StrictHostKeyChecking=accept-new admin@"$DEPLOY_HOST" '
             set -e
             cd /var/www/report-cards
-            git pull --ff-only
+            echo "Before:"; git branch -vv; git log --oneline -1
+            git fetch origin main
+            git checkout -B main origin/main
+            git reset --hard origin/main
+            echo "Now running:"; git log --oneline -1
             composer install --no-dev --optimize-autoloader --no-interaction
             php artisan migrate --force
+            php artisan optimize:clear
             php artisan optimize
           '
